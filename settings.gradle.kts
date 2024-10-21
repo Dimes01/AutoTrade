@@ -3,8 +3,4 @@ plugins {
 }
 rootProject.name = "AutoTrade"
 include("AutoTrade.Data")
-include("AutoTrade.Analysis")
-include("AutoTrade.Orders")
-include("AutoTrade.Strategies")
-include("domain.grpc")
 include("AutoTrade.Notifications")

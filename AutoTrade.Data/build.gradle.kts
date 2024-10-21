@@ -12,7 +12,6 @@ val grpcKotlinVersion: String by project
 val ioGrpcProtoVersion: String by project
 val comGoogleProtoVersion: String by project
 dependencies {
-    implementation(project(":domain.grpc"))
     implementation("io.grpc:grpc-kotlin-stub:$grpcKotlinVersion")
     implementation("io.grpc:grpc-protobuf:$ioGrpcProtoVersion")
     implementation("io.grpc:grpc-netty-shaded:$ioGrpcProtoVersion")
