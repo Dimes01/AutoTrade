@@ -11,6 +11,7 @@
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/AutoTrade.Analysis" />
             <option value="$PROJECT_DIR$/AutoTrade.Data" />
+            <option value="$PROJECT_DIR$/AutoTrade.Notifications" />
             <option value="$PROJECT_DIR$/AutoTrade.Orders" />
             <option value="$PROJECT_DIR$/AutoTrade.Strategies" />
             <option value="$PROJECT_DIR$/domain.grpc" />
