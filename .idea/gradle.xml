@@ -13,6 +13,7 @@
             <option value="$PROJECT_DIR$/AutoTrade.Data" />
             <option value="$PROJECT_DIR$/AutoTrade.Orders" />
             <option value="$PROJECT_DIR$/AutoTrade.Strategies" />
+            <option value="$PROJECT_DIR$/domain.grpc" />
           </set>
         </option>
       </GradleProjectSettings>

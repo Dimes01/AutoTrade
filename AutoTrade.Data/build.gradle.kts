@@ -8,8 +8,16 @@ repositories {
     mavenCentral()
 }
 
+val grpcKotlinVersion: String by project
+val ioGrpcProtoVersion: String by project
+val comGoogleProtoVersion: String by project
 dependencies {
-
+    implementation(project(":domain.grpc"))
+    implementation("io.grpc:grpc-kotlin-stub:$grpcKotlinVersion")
+    implementation("io.grpc:grpc-protobuf:$ioGrpcProtoVersion")
+    implementation("io.grpc:grpc-netty-shaded:$ioGrpcProtoVersion")
+    implementation("com.google.protobuf:protobuf-kotlin:$comGoogleProtoVersion")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.9.0")
     testImplementation(kotlin("test"))
 }
 
