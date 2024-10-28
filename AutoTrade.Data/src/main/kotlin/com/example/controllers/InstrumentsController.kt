@@ -1,11 +1,8 @@
 package com.example.controllers
 
+import com.example.dto.LastPriceDTO
 import com.example.services.QuotesService
-import jakarta.validation.constraints.Max
-import jakarta.validation.constraints.Min
-import jakarta.validation.constraints.NotBlank
-import jakarta.validation.constraints.NotNull
-import jakarta.validation.constraints.Size
+import jakarta.validation.constraints.*
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.ResponseEntity
@@ -15,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 import ru.tinkoff.piapi.contract.v1.CandleInterval
 import ru.tinkoff.piapi.contract.v1.HistoricCandle
-import ru.tinkoff.piapi.contract.v1.LastPrice
 import java.time.Instant
 
 @RestController
@@ -32,7 +28,7 @@ class InstrumentsController(
     @GetMapping("/last-price")
     fun getLastPrice(
         @RequestParam(name = "idsInstrument", required = true) @Size(min = 1, max = 50) idsInstrument: Iterable<String>
-    ): ResponseEntity<List<LastPrice>> {
+    ): ResponseEntity<List<LastPriceDTO>> {
         logger.info("Endpoint /instruments/last-price/$idsInstrument starts work")
         return ResponseEntity.ok(quotesService.getLastPrice(idsInstrument))
             .also { logger.info("Endpoint /instruments/last-price/$idsInstrument finishes work") }

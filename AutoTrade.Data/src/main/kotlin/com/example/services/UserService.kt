@@ -1,7 +1,7 @@
 package com.example.services
 
 import com.example.dto.AccountDTO
-import com.example.utils.AccountMappers
+import com.example.dto.mapToDTO
 import io.grpc.Channel
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
@@ -15,7 +15,6 @@ class UserService(
 ) {
     companion object {
         private val logger = LoggerFactory.getLogger(UserService::class.java)
-        private val mappers = AccountMappers()
     }
     private val api = InvestApi.createReadonly(channel)
 
@@ -23,7 +22,7 @@ class UserService(
         logger.info("Method 'getAccounts': started")
         val result = api.userService.getAccounts(status)
         return result.get()
-            .map { mappers.mapToAccountDTO(it) }
+            .map { it.mapToDTO() }
             .also { logger.info("Method 'getAccounts': finished") }
     }
 }
