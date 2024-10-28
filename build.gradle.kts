@@ -1,6 +1,7 @@
 plugins {
     kotlin("jvm") version "2.0.0"
     kotlin("plugin.spring") version "2.0.0"
+    kotlin("plugin.serialization") version "2.0.0"
     id("org.springframework.boot") version "3.3.4"
     id("io.spring.dependency-management") version "1.1.6"
     id("com.google.protobuf") version "0.9.4"
@@ -22,6 +23,7 @@ val comGoogleProtoVersion: String by project
 subprojects {
     apply(plugin = "org.jetbrains.kotlin.jvm")
     apply(plugin = "org.jetbrains.kotlin.plugin.spring")
+    apply(plugin = "org.jetbrains.kotlin.plugin.serialization")
     apply(plugin = "org.springframework.boot")
     apply(plugin = "io.spring.dependency-management")
     apply(plugin = "com.google.protobuf")
@@ -31,6 +33,7 @@ subprojects {
         implementation("org.springframework.boot:spring-boot-starter-validation")
         implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
         implementation("org.jetbrains.kotlin:kotlin-reflect")
+        implementation("org.jetbrains.kotlinx:kotlinx-serialization-json")
 
         implementation("io.grpc:grpc-kotlin-stub:$grpcKotlinVersion")
         implementation("io.grpc:grpc-protobuf:$ioGrpcProtoVersion")

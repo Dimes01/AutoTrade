@@ -1,5 +1,6 @@
 package com.example.controllers
 
+import com.example.dto.AccountDTO
 import com.example.services.OperationService
 import com.example.services.UserService
 import jakarta.validation.constraints.NotBlank
@@ -9,7 +10,6 @@ import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
-import ru.tinkoff.piapi.contract.v1.Account
 import ru.tinkoff.piapi.contract.v1.AccountStatus
 import ru.tinkoff.piapi.core.models.Positions
 
@@ -23,10 +23,8 @@ class PortfolioController(
         private val logger = LoggerFactory.getLogger(PortfolioController::class.java)
     }
 
-    //TODO: вместо контрактов написать DTO
-
     @GetMapping("/accounts/open")
-    fun getAccounts(): ResponseEntity<List<Account>> {
+    fun getAccounts(): ResponseEntity<List<AccountDTO>> {
         logger.info("Endpoint '/portfolio/accounts/open' starts work")
         return ResponseEntity.ok(userService.getAccounts(AccountStatus.ACCOUNT_STATUS_OPEN))
             .also { logger.info("Endpoint '/portfolio/accounts/open' finishes work") }
