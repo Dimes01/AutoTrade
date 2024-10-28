@@ -1,4 +1,4 @@
-package utils
+package com.example.utils
 
 import io.grpc.*
 import io.grpc.ForwardingClientCall.SimpleForwardingClientCall
