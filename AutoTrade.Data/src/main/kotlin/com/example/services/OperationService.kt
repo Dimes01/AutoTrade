@@ -9,7 +9,7 @@ import ru.tinkoff.piapi.core.models.Positions
 
 @Service
 class OperationService(
-    @Autowired private val channel: Channel
+    private val channel: Channel
 ) {
     companion object {
         private val logger = LoggerFactory.getLogger(OperationService::class.java)

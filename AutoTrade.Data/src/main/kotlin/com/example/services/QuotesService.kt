@@ -13,7 +13,7 @@ import java.time.Instant
 
 @Service
 class QuotesService(
-    @Autowired private val channel: Channel,
+    private val channel: Channel,
 ) {
     companion object {
         private val logger = LoggerFactory.getLogger(QuotesService::class.java)
