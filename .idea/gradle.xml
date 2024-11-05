@@ -10,7 +10,6 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/AutoTrade.Data" />
-            <option value="$PROJECT_DIR$/AutoTrade.Notifications" />
           </set>
         </option>
       </GradleProjectSettings>

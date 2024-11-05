@@ -3,5 +3,3 @@ plugins {
 }
 rootProject.name = "AutoTrade"
 include("AutoTrade.Data")
-include("AutoTrade.Notifications")
-include("AutoTrade.Authorization")
