@@ -3,3 +3,4 @@ plugins {
 }
 rootProject.name = "AutoTrade"
 include("AutoTrade.Data")
+include("AutoTrade.Auth")
