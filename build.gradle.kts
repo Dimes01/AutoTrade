@@ -20,7 +20,7 @@ allprojects {
 val grpcKotlinVersion: String by project
 val ioGrpcProtoVersion: String by project
 val comGoogleProtoVersion: String by project
-
+val testcontainersVersion: String by project
 subprojects {
     apply(plugin = "org.jetbrains.kotlin.jvm")
     apply(plugin = "org.jetbrains.kotlin.plugin.spring")
@@ -46,6 +46,8 @@ subprojects {
 
         runtimeOnly("org.postgresql:postgresql")
 
+        testImplementation("org.testcontainers:testcontainers:$testcontainersVersion")
+        testImplementation("org.testcontainers:junit-jupiter:$testcontainersVersion")
         testImplementation("org.testcontainers:postgresql")
         testImplementation(kotlin("test"))
         testImplementation("org.springframework.boot:spring-boot-starter-test")

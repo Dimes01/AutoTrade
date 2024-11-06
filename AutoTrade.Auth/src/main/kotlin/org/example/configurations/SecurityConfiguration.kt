@@ -8,18 +8,18 @@ import org.springframework.context.annotation.Configuration
 import org.springframework.security.authentication.AuthenticationManager
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
 import org.springframework.security.config.http.SessionCreationPolicy
 import org.springframework.security.core.userdetails.UserDetailsService
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.security.web.SecurityFilterChain
 
 @Configuration
-class SecurityConfiguration(
-    private val userDetailsService: CustomUserDetailsService,
+@EnableWebSecurity
+class SecurityConfiguration {
 
     @Value("\${server.servlet.session.timeout}")
-    private var sessionTimeout: Int
-) {
+    private lateinit var sessionTimeout: String
 
     @Bean
     fun passwordEncoder(): BCryptPasswordEncoder = BCryptPasswordEncoder()
@@ -27,35 +27,28 @@ class SecurityConfiguration(
     @Bean
     fun securityFilterChain(http: HttpSecurity): SecurityFilterChain {
         http
-            .csrf {
-                it.disable()
-            }
-            .authorizeHttpRequests { it
-                .requestMatchers("/register", "/login").permitAll()
-                .anyRequest().authenticated()
+            .csrf { it.disable() }
+            .authorizeHttpRequests {
+                it.requestMatchers("/register", "/login").permitAll()
+                it.anyRequest().authenticated()
             }
             .sessionManagement {
                 it.sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
                 it.sessionFixation().migrateSession()
             }
-            .formLogin{ it.disable() }
-            .httpBasic {  }
+            .formLogin { it.disable() }
+            .httpBasic {}
 
         return http.build()
     }
 
     @Bean
-    fun httpSessionCustomizer(): (HttpSession) -> Unit = { it.maxInactiveInterval = sessionTimeout }
-
-    @Bean
-    fun authenticationManager(
-        authenticationConfiguration: AuthenticationConfiguration
-    ): AuthenticationManager {
-        return authenticationConfiguration.authenticationManager
+    fun httpSessionCustomizer(): (HttpSession) -> Unit = {
+        it.maxInactiveInterval = sessionTimeout.toInt()
     }
 
     @Bean
-    fun userDetailsService(): UserDetailsService {
-        return userDetailsService
+    fun authenticationManager(authenticationConfiguration: AuthenticationConfiguration): AuthenticationManager {
+        return authenticationConfiguration.authenticationManager
     }
 }

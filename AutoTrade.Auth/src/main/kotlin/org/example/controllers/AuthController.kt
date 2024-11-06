@@ -2,8 +2,10 @@ package org.example.controllers
 
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpSession
+import jakarta.validation.Valid
 import org.example.dto.LoginRequest
 import org.example.dto.SignUpRequest
+import org.example.entities.User
 import org.example.services.CustomUserDetailsService
 import org.springframework.http.ResponseEntity
 import org.springframework.security.authentication.AuthenticationManager
@@ -11,6 +13,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication
 import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.security.core.userdetails.UserDetails
+import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.*
 
 @RestController
@@ -19,6 +22,21 @@ class AuthController(
     private val authenticationManager: AuthenticationManager,
     private val userDetailsService: CustomUserDetailsService
 ) {
+
+    @PostMapping("/register")
+    fun registerUser(@Valid @RequestBody signUpRequest: SignUpRequest): ResponseEntity<User> {
+        return try {
+            val user = userDetailsService.registerUser(
+                signUpRequest.username,
+                signUpRequest.email,
+                signUpRequest.password,
+                signUpRequest.name)
+            ResponseEntity.ok(user)
+        } catch (e: IllegalArgumentException) {
+            ResponseEntity.badRequest().build()
+        }
+    }
+
     @PostMapping("/login")
     fun authenticateUser(@RequestBody loginRequest: LoginRequest, session: HttpSession): ResponseEntity<String> {
         val authentication: Authentication = authenticationManager.authenticate(
@@ -27,16 +45,6 @@ class AuthController(
         SecurityContextHolder.getContext().authentication = authentication
         session.setAttribute("user", authentication.principal as UserDetails)
         return ResponseEntity.ok("User authenticated successfully")
-    }
-
-    @PostMapping("/register")
-    fun registerUser(@RequestBody signUpRequest: SignUpRequest): ResponseEntity<String> {
-        return try {
-            userDetailsService.registerUser(signUpRequest.username, signUpRequest.email, signUpRequest.password)
-            ResponseEntity.ok("User registered successfully")
-        } catch (e: IllegalArgumentException) {
-            ResponseEntity.badRequest().body(e.message)
-        }
     }
 
     @GetMapping("/check-session")

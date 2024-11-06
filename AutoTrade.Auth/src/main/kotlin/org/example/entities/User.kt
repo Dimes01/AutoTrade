@@ -11,14 +11,20 @@ class User(
     @Column(name = "id", nullable = false, updatable = false)
     var id: Long = 0,
 
-    @Column(name = "name", nullable = false)
-    var name: String = "",
+    @Column(name = "username", nullable = false)
+    var username: String,
 
     @Column(name = "email", nullable = false, unique = true)
-    var email: String = "",
+    var email: String,
 
     @Column(name = "password", nullable = false)
-    var password: String = ""
+    var password: String,
+
+    @Column(name = "authority", nullable = false)
+    var authority: String = "ROLE_USER",
+
+    @Column(name = "name", nullable = false)
+    var name: String,
 ) {
 
     override fun equals(other: Any?): Boolean {
@@ -31,7 +37,7 @@ class User(
     override fun hashCode(): Int = javaClass.hashCode()
 
     override fun toString(): String {
-        return "User(id=$id, name='$name', email='$email')"
+        return "User(id=$id, username='$username', email='$email')"
     }
 }
 
