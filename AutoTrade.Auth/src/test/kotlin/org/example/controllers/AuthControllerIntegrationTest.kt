@@ -32,6 +32,7 @@ class AuthControllerIntegrationTest(
 ) {
     private val utilMapper: ObjectMapper = ObjectMapper()
     private val signUpRequest: SignUpRequest = SignUpRequest("user1", "user1@mail.ru", "1111", "Ivan")
+
     private companion object {
         @JvmStatic
         fun validationSignUpParameters(): Stream<Arguments> = Stream.of(
@@ -65,9 +66,11 @@ class AuthControllerIntegrationTest(
         val requestString = utilMapper.writeValueAsString(signUpRequest)
 
         // Act
-        val responseString = mockMvc.perform(post("/register")
+        val responseString = mockMvc.perform(
+            post("/register")
                 .content(requestString)
-                .contentType(MediaType.APPLICATION_JSON))
+                .contentType(MediaType.APPLICATION_JSON)
+        )
             .andExpect(status().isOk)
             .andReturn().response.contentAsString
         val user = utilMapper.readValue(responseString, User::class.java)
@@ -85,13 +88,16 @@ class AuthControllerIntegrationTest(
             username = signUpRequest.username,
             email = signUpRequest.email,
             password = signUpRequest.password,
-            name = signUpRequest.name)
+            name = signUpRequest.name
+        )
         userRepository.save(user)
 
         // Act
-        mockMvc.perform(post("/register")
+        mockMvc.perform(
+            post("/register")
                 .content(requestString)
-                .contentType(MediaType.APPLICATION_JSON))
+                .contentType(MediaType.APPLICATION_JSON)
+        )
             .andExpect(status().isBadRequest)
 
         // Assert
@@ -105,9 +111,11 @@ class AuthControllerIntegrationTest(
         val requestString = utilMapper.writeValueAsString(testSignUpRequest)
 
         // Act & Assert
-        mockMvc.perform(post("/register")
+        mockMvc.perform(
+            post("/register")
                 .content(requestString)
-                .contentType(MediaType.APPLICATION_JSON))
+                .contentType(MediaType.APPLICATION_JSON)
+        )
             .andExpect(resultMatcher)
     }
 }
